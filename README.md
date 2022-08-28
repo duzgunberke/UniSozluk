@@ -44,13 +44,13 @@
  <p><b>Proje detay</b></p>
   
 
-<img src="https://i.pinimg.com/originals/3b/8a/d2/3b8ad2c7b1be2caf24321c852103598a.jpg" align="left" height="300" width="" />  
+<img src="https://i.pinimg.com/originals/3b/8a/d2/3b8ad2c7b1be2caf24321c852103598a.jpg" align="left" height="600" width="" />  
   </div>
 <div>
  <p><b>Proje detay 2</b></p>  
   
 
-<img src="https://techbeasts.com/wp-content/uploads/2016/12/maxresdefault.jpg" align="left" height="300" width="" />  
+<img src="https://techbeasts.com/wp-content/uploads/2016/12/maxresdefault.jpg" align="left" height="600" width="" />  
   </div>
 </div>
 <br/>  
