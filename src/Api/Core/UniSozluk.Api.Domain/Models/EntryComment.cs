@@ -20,6 +20,6 @@ namespace UniSozluk.Api.Domain.Models
 
         public virtual ICollection<EntryCommentVote> EntryCommentVotes { get; set; }
 
-        public virtual ICollection<EntryCommentFavorite> EntryCommentFavorites { get; set; }
+        public virtual ICollection<EntryCommentVote> EntryCommentFavorites { get; set; }
     }
 }
