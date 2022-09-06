@@ -21,23 +21,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{725511
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projections", "Projections", "{E5955155-7495-4E99-BE80-8E5232D31BCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.Common", "src\Common\UniSozluk.Common\UniSozluk.Common.csproj", "{9709D4EB-9798-4C27-BF98-D7D333568897}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Common", "src\Common\UniSozluk.Common\UniSozluk.Common.csproj", "{9709D4EB-9798-4C27-BF98-D7D333568897}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.Infrastructure.Persistence", "src\Api\Infrastructure\UniSozluk.Infrastructure.Persistence\UniSozluk.Infrastructure.Persistence.csproj", "{6F7797F9-1DB9-48BD-BCC7-4D45B85FF992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Api.Infrastructure.Persistence", "src\Api\Infrastructure\UniSozluk.Infrastructure.Persistence\UniSozluk.Api.Infrastructure.Persistence.csproj", "{6F7797F9-1DB9-48BD-BCC7-4D45B85FF992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.Api.Application", "src\Api\Core\UniSozluk.Api.Application\UniSozluk.Api.Application.csproj", "{51CA0EAC-6CC9-4BC9-BDB4-43F9FBBFA2DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Api.Application", "src\Api\Core\UniSozluk.Api.Application\UniSozluk.Api.Application.csproj", "{51CA0EAC-6CC9-4BC9-BDB4-43F9FBBFA2DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.Api.Domain", "src\Api\Core\UniSozluk.Api.Domain\UniSozluk.Api.Domain.csproj", "{FFFC1699-1C8D-43D8-A593-53851B4BC0B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Api.Domain", "src\Api\Core\UniSozluk.Api.Domain\UniSozluk.Api.Domain.csproj", "{FFFC1699-1C8D-43D8-A593-53851B4BC0B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.Api.WebApi", "src\Api\WebApi\UniSozluk.Api.WebApi\UniSozluk.Api.WebApi.csproj", "{D0ADA3A6-5F23-443D-800B-A798886379FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Api.WebApi", "src\Api\WebApi\UniSozluk.Api.WebApi\UniSozluk.Api.WebApi.csproj", "{D0ADA3A6-5F23-443D-800B-A798886379FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.Projections.FavoriteService", "src\Projections\UniSozluk.Projections.FavoriteService\UniSozluk.Projections.FavoriteService.csproj", "{5D64CEA2-ADBD-4FEF-855E-B93BA7AE7285}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Projections.FavoriteService", "src\Projections\UniSozluk.Projections.FavoriteService\UniSozluk.Projections.FavoriteService.csproj", "{5D64CEA2-ADBD-4FEF-855E-B93BA7AE7285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.Projections.VoteService", "src\Projections\UniSozluk.Projections.VoteService\UniSozluk.Projections.VoteService.csproj", "{5B9A2235-018A-43F8-90EB-7BAE64774B08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Projections.VoteService", "src\Projections\UniSozluk.Projections.VoteService\UniSozluk.Projections.VoteService.csproj", "{5B9A2235-018A-43F8-90EB-7BAE64774B08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.Projections.UserService", "src\Projections\UniSozluk.Projections.UserService\UniSozluk.Projections.UserService.csproj", "{89AC7BE1-9E61-4FAE-9596-25C70C2802B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Projections.UserService", "src\Projections\UniSozluk.Projections.UserService\UniSozluk.Projections.UserService.csproj", "{89AC7BE1-9E61-4FAE-9596-25C70C2802B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniSozluk.WebApp", "src\Clients\BlazorWeb\UniSozluk.WebApp\UniSozluk.WebApp.csproj", "{E569F72A-6FAB-4C66-920F-B2654C5FA338}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.WebApp", "src\Clients\BlazorWeb\UniSozluk.WebApp\UniSozluk.WebApp.csproj", "{E569F72A-6FAB-4C66-920F-B2654C5FA338}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

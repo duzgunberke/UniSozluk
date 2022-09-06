@@ -23,7 +23,8 @@ namespace UniSozluk.Infrastructure.Persistence.EntityConfigurations.EntryComment
 
             builder.HasOne(i => i.CreatedUser)
                 .WithMany(i => i.EntryCommentFavorites)
-                .HasForeignKey(i => i.CreateById);
+                .HasForeignKey(i => i.CreateById)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

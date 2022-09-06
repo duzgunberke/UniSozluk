@@ -19,7 +19,8 @@ namespace UniSozluk.Infrastructure.Persistence.EntityConfigurations.EntryComment
 
             builder.HasOne(i => i.CreatedBy)
                 .WithMany(i => i.EntryComments)
-                .HasForeignKey(i => i.CreatedById);
+                .HasForeignKey(i => i.CreatedById)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(i => i.Entry)
                 .WithMany(i => i.EntryComments)
