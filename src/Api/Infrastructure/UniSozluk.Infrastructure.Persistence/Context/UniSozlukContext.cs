@@ -1,24 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UniSozluk.Api.Domain.Models;
 
 namespace UniSozluk.Infrastructure.Persistence.Context
 {
-    public class UniSozlukContext:DbContext
+    public class UniSozlukContext : DbContext
     {
         public const string DEFAULT_SCHEMA = "dbo";
-        public UniSozlukContext(DbContextOptions options):base(options)
+
+        public UniSozlukContext()
+        {
+
+        }
+        public UniSozlukContext(DbContextOptions options) : base(options)
         {
         }
 
-        public DbSet<User> Users{ get; set; }
-        public DbSet<Entry> Entries{ get; set; }
-        public DbSet<EntryVote> EntryVotes{ get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Entry> Entries { get; set; }
+        public DbSet<EntryVote> EntryVotes { get; set; }
         public DbSet<EntryFavorite> EntryFavorites { get; set; }
 
         public DbSet<EntryComment> EntryComments { get; set; }
@@ -26,6 +26,18 @@ namespace UniSozluk.Infrastructure.Persistence.Context
         public DbSet<EntryCommentFavorite> EntryCommentFavorites { get; set; }
 
         public DbSet<EmailConfirmation> EmailConfirmations { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var connStr= "Data Source=BERKE;Initial Catalog=UniSozluk;trusted_connection=true";
+                optionsBuilder.UseSqlServer(connStr, opt =>
+                {
+                    opt.EnableRetryOnFailure();
+                });
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,9 +69,9 @@ namespace UniSozluk.Infrastructure.Persistence.Context
 
         private void OnBeforeSave()
         {
-            var addedEntites=ChangeTracker.Entries()
-                                        .Where(i=>i.State==EntityState.Added)
-                                        .Select(i=>(BaseEntity)i.Entity);
+            var addedEntites = ChangeTracker.Entries()
+                                        .Where(i => i.State == EntityState.Added)
+                                        .Select(i => (BaseEntity)i.Entity);
             PrepareAddedEntities(addedEntites);
         }
 
@@ -67,7 +79,7 @@ namespace UniSozluk.Infrastructure.Persistence.Context
         {
             foreach (var entity in entities)
             {
-                if(entity.CreateDate==DateTime.MinValue)
+                if (entity.CreateDate == DateTime.MinValue)
                     entity.CreateDate = DateTime.Now;
             }
         }

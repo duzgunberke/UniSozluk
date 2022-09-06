@@ -10,7 +10,7 @@ namespace UniSozluk.Infrastructure.Persistence.EntityConfigurations
         {
             builder.HasKey(i => i.Id);
             builder.Property(i => i.Id).ValueGeneratedOnAdd();
-            builder.Property(i=>i.CreateDate).ValueGeneratedOnAdd();
+            builder.Property(i => i.CreateDate).ValueGeneratedOnAdd();
         }
     }
 }
