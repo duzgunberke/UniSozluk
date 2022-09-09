@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,49 +7,86 @@ using System.Text;
 using System.Threading.Tasks;
 using UniSozluk.Api.Application.Interfaces.Repositories;
 using UniSozluk.Api.Domain.Models;
+using UniSozluk.Infrastructure.Persistence.Context;
 
 namespace UniSozluk.Api.Infrastructure.Persistence.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        public int Add(TEntity entity)
+        private readonly UniSozlukContext dbContext;
+
+        protected DbSet<TEntity> entity => dbContext.Set<TEntity>();
+
+        public GenericRepository(UniSozlukContext dbContext)
         {
-            throw new NotImplementedException();
+            this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
-        public int Add(IEnumerable<TEntity> entities)
+        #region Insert Methods
+        public virtual int Add(TEntity entity)
         {
-            throw new NotImplementedException();
+            this.entity.Add(entity);
+            return dbContext.SaveChanges();
         }
 
-        public Task<int> AddAsync(TEntity entity)
+        public virtual int Add(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            if (entities != null && !entities.Any())
+                return 0;
+
+            entity.AddRange(entity);
+            return dbContext.SaveChanges();
         }
 
-        public Task<int> AddAsync(IEnumerable<TEntity> entities)
+        public virtual async Task<int> AddAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            await this.entity.AddAsync(entity);
+            return await dbContext.SaveChangesAsync();
         }
 
-        public int AddOrUpdate(TEntity entity)
+        public virtual async Task<int> AddAsync(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
-        }
+            if(entities != null && !entities.Any())
+                return 0;
 
-        public Task<int> AddOrUpdateAsync(TEntity entity)
-        {
-            throw new NotImplementedException();
+            await entity.AddRangeAsync(entities);
+            return await dbContext.SaveChangesAsync();
+            
         }
+        #endregion
 
-        public IQueryable<TEntity> AsQueryable()
+        #region AddOrUpdate Methods
+        public virtual int AddOrUpdate(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (!this.entity.Local.Any(i => EqualityComparer<Guid>.Default.Equals(i.Id, entity.Id)))
+                dbContext.Update(entity);
+
+                return dbContext.SaveChanges();  
         }
-
-        public Task BulkAdd(IEnumerable<TEntity> entities)
+        
+        public virtual Task<int> AddOrUpdateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (!this.entity.Local.Any(i => EqualityComparer<Guid>.Default.Equals(i.Id, entity.Id)))
+                dbContext.Update(entity);
+
+            return dbContext.SaveChangesAsync();
+        }
+        #endregion
+
+        public IQueryable<TEntity> AsQueryable() => entity.AsQueryable();
+
+        #region Bulk CRUD Methods
+        public virtual Task BulkAdd(IEnumerable<TEntity> entities)
+        {
+            if(entities!=null&&!entities.Any())
+                return Task.CompletedTask;
+
+            foreach (var entityItem in entities)
+            {
+                entity.Add(entityItem);
+            }
+
+            return dbContext.SaveChangesAsync();
         }
 
         public Task BulkDelete(Expression<Func<TEntity, bool>> predicate)
@@ -70,45 +108,73 @@ namespace UniSozluk.Api.Infrastructure.Persistence.Repositories
         {
             throw new NotImplementedException();
         }
+        #endregion
 
-        public int Delete(TEntity entity)
+        #region Delete Methods
+        public virtual int Delete(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (dbContext.Entry(entity).State == EntityState.Detached)
+            {
+                this.entity.Attach(entity);
+            }
+
+            this.entity.Remove(entity);
+            return dbContext.SaveChanges();
         }
 
-        public int Delete(Guid id)
+        public virtual int Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = this.entity.Find(id);
+            return Delete(entity);
         }
 
         public Task<int> DeleteAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (dbContext.Entry(entity).State == EntityState.Detached)
+            {
+                this.entity.Attach(entity);
+            }
+
+            this.entity.Remove(entity);
+
+            return dbContext.SaveChangesAsync();
         }
 
         public Task<int> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var entity=this.entity.Find(id);
+            return DeleteAsync(entity); 
         }
 
-        public bool DeleteRange(Expression<Func<TEntity, bool>> predicate)
+        public virtual bool DeleteRange(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            dbContext.RemoveRange(predicate);
+            return dbContext.SaveChanges()>0;
         }
 
-        public Task<bool> DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<bool> DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            dbContext.RemoveRange(predicate);
+            return await dbContext.SaveChangesAsync() > 0;
         }
-
+        #endregion
         public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
         {
-            throw new NotImplementedException();
+            var query=entity.AsQueryable();
+            if(predicate != null)
+                query = query.Where(predicate);
+
+            query = ApplyIncludes(query, includes);
+
+            if (noTracking)
+                query = query.AsNoTracking();
+
+            return query;
         }
 
         public Task<List<TEntity>> GetAll(bool noTracking = true)
@@ -130,15 +196,46 @@ namespace UniSozluk.Api.Infrastructure.Persistence.Repositories
         {
             throw new NotImplementedException();
         }
-
-        public int Update(TEntity entity)
+        #region Update Methods
+        public virtual int Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            this.entity.Attach(entity);
+            dbContext.Entry(entity).State = EntityState.Modified;
+
+            return dbContext.SaveChanges();
         }
 
-        public Task<int> UpdateAsync(TEntity entity)
+        public virtual async Task<int> UpdateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            this.entity.Attach(entity);
+            dbContext.Entry(entity).State = EntityState.Modified;
+
+            return await dbContext.SaveChangesAsync();
+        }
+        #endregion
+
+        #region SaveChanges Methods
+        public Task<int> SaveChangesAsync()
+        {
+            return dbContext.SaveChangesAsync();
+        }
+
+        public int SaveChanges()
+        {
+            return dbContext.SaveChanges();
+        }
+        #endregion
+        private static IQueryable<TEntity> ApplyIncludes(IQueryable<TEntity> query,params Expression<Func<TEntity, object>>[] includes)
+        {
+            if (includes != null)
+            {
+                foreach(var includeItem in includes)
+                {
+                    query=query.Include(includeItem);
+                }
+            }
+
+            return query;
         }
     }
 }
