@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniSozluk.Api.Application.Interfaces.Repositories;
+using UniSozluk.Api.Infrastructure.Persistence.Repositories;
 using UniSozluk.Infrastructure.Persistence.Context;
 
 namespace UniSozluk.Infrastructure.Persistence.Extensions
@@ -26,6 +28,8 @@ namespace UniSozluk.Infrastructure.Persistence.Extensions
             //----- SEED DATA -----
             //var seedData = new SeedData();
             //seedData.SeedAsync(configuration).GetAwaiter().GetResult();
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
