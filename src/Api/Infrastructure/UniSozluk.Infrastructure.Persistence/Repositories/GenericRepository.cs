@@ -91,22 +91,38 @@ namespace UniSozluk.Api.Infrastructure.Persistence.Repositories
 
         public Task BulkDelete(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            dbContext.RemoveRange(entity.Where(predicate));
+            return dbContext.SaveChangesAsync();
         }
 
         public Task BulkDelete(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            if (entities != null && !entities.Any())
+                return Task.CompletedTask;
+
+            entity.RemoveRange(entities);
+            return dbContext.SaveChangesAsync();
         }
 
         public Task BulkDeleteById(IEnumerable<Guid> ids)
         {
-            throw new NotImplementedException();
+            if (ids != null && ids.Any())
+                return Task.CompletedTask;
+
+            dbContext.RemoveRange(entity.Where(i => ids.Contains(i.Id)));
+            return dbContext.SaveChangesAsync();
         }
 
         public Task BulkUpdate(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            if (entities != null && !entities.Any())
+                return Task.CompletedTask;
+
+            foreach (var entityItem in entities)
+            {
+                entity.Update(entityItem);
+            }
+            return dbContext.SaveChangesAsync();
         }
         #endregion
 
@@ -160,7 +176,7 @@ namespace UniSozluk.Api.Infrastructure.Persistence.Repositories
         #endregion
         public Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
         {
-            throw new NotImplementedException();
+            return Get(predicate, noTracking, includes).FirstOrDefaultAsync();
         }
 
         public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
@@ -177,25 +193,74 @@ namespace UniSozluk.Api.Infrastructure.Persistence.Repositories
             return query;
         }
 
-        public Task<List<TEntity>> GetAll(bool noTracking = true)
+        public async Task<List<TEntity>> GetAll(bool noTracking = true)
         {
-            throw new NotImplementedException();
+            if(noTracking)
+                return await entity.AsNoTracking().ToListAsync();
+
+            return await entity.ToListAsync();
         }
 
-        public Task<TEntity> GetByIdAsync(Guid id, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<TEntity> GetByIdAsync(Guid id, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
         {
-            throw new NotImplementedException();
+            TEntity found = await entity.FindAsync(id);
+
+            if (found == null)
+                return null;
+
+            if(noTracking)
+                dbContext.Entry(found).State = EntityState.Detached;
+
+            foreach (Expression<Func<TEntity,object>> include in includes)
+            {
+                dbContext.Entry(found).Reference(include).Load();
+            }
+
+            return found;
         }
 
-        public Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, Func<IQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, Func<IQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
         {
-            throw new NotImplementedException();
+            IQueryable<TEntity> query = entity;
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            foreach (Expression<Func<TEntity,object>> include in includes)
+            {
+                query=query.Include(include);
+            }
+
+            if (orderBy != null)
+            {
+                //What a shit ?
+                //query = orderBy(query);
+                throw new Exception("Lan bu hata nereden geliyor");
+            }
+
+            if(noTracking)
+                query=query.AsNoTracking();
+
+            return await query.ToListAsync();
         }
 
-        public Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
         {
-            throw new NotImplementedException();
+            IQueryable<TEntity> query = entity;
+
+            if(predicate!=null)
+                query = query.Where(predicate);
+
+            query=ApplyIncludes(query, includes);
+
+            if(noTracking)
+                query=query.AsNoTracking();
+
+            return await query.SingleOrDefaultAsync();
         }
+
         #region Update Methods
         public virtual int Update(TEntity entity)
         {
