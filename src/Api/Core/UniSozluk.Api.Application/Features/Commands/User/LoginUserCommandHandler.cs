@@ -42,7 +42,7 @@ namespace UniSozluk.Api.Application.Features.Commands.User
             if (dbUser.Password != pass)
                 throw new DatabaseValidationException("Password is wrong");
 
-            if(dbUser.EmailConfirmed)
+            if(!dbUser.EmailConfirmed)
                 throw new DatabaseValidationException("Email adress is not confirmed yet");
 
             var result = mapper.Map<LoginUserViewModel>(dbUser);

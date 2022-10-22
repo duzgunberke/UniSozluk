@@ -219,32 +219,7 @@ namespace UniSozluk.Api.Infrastructure.Persistence.Repositories
             return found;
         }
 
-        public virtual async Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, Func<IQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
-        {
-            IQueryable<TEntity> query = entity;
-
-            if (predicate != null)
-            {
-                query = query.Where(predicate);
-            }
-
-            foreach (Expression<Func<TEntity,object>> include in includes)
-            {
-                query=query.Include(include);
-            }
-
-            if (orderBy != null)
-            {
-                //What a shit ?
-                query = orderBy(query);
-                //throw new Exception("Lan bu hata nereden geliyor");
-            }
-
-            if(noTracking)
-                query=query.AsNoTracking();
-
-            return await query.ToListAsync();
-        }
+     
 
         public virtual async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
         {
@@ -301,6 +276,33 @@ namespace UniSozluk.Api.Infrastructure.Persistence.Repositories
             }
 
             return query;
+        }
+
+        public virtual async Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = entity;
+
+            if (predicate != null)
+            {
+                query = query.Where(predicate);
+            }
+
+            foreach (Expression<Func<TEntity, object>> include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            if (orderBy != null)
+            {
+                //What a shit ?
+                query = orderBy(query);
+                //throw new Exception("Lan bu hata nereden geliyor");
+            }
+
+            if (noTracking)
+                query = query.AsNoTracking();
+
+            return await query.ToListAsync();
         }
     }
 }
