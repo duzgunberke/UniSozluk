@@ -31,7 +31,7 @@ namespace UniSozluk.Infrastructure.Persistence.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connStr= "Data Source=BERKE;Initial Catalog=UniSozluk;trusted_connection=true";
+                var connStr= "Data Source=DESKTOP-JCKK4GS;Initial Catalog=UniSozluk;trusted_connection=true";
                 optionsBuilder.UseSqlServer(connStr, opt =>
                 {
                     opt.EnableRetryOnFailure();
