@@ -8,7 +8,7 @@ using UniSozluk.Infrastructure.Persistence.Context;
 
 #nullable disable
 
-namespace UniSozluk.Infrastructure.Persistence.Migrations
+namespace UniSozluk.Api.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UniSozlukContext))]
     partial class UniSozlukContextModelSnapshot : ModelSnapshot

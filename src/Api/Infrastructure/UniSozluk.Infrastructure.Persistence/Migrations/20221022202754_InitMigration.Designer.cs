@@ -9,10 +9,10 @@ using UniSozluk.Infrastructure.Persistence.Context;
 
 #nullable disable
 
-namespace UniSozluk.Infrastructure.Persistence.Migrations
+namespace UniSozluk.Api.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UniSozlukContext))]
-    [Migration("20220906183316_InitMigration")]
+    [Migration("20221022202754_InitMigration")]
     partial class InitMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

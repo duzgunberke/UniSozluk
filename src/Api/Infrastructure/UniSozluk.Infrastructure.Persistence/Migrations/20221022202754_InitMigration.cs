@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace UniSozluk.Infrastructure.Persistence.Migrations
+namespace UniSozluk.Api.Infrastructure.Persistence.Migrations
 {
     public partial class InitMigration : Migration
     {
