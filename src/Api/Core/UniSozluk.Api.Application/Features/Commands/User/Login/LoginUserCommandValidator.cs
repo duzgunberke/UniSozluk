@@ -6,15 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using UniSozluk.Common.Models.RequestModels;
 
-namespace UniSozluk.Api.Application.Features.Commands.User
+namespace UniSozluk.Api.Application.Features.Commands.User.Login
 {
-    public class LoginUserCommandValidator:AbstractValidator<LoginUserCommand>
+    public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
     {
         public LoginUserCommandValidator()
         {
             RuleFor(i => i.EmailAdress).NotNull().EmailAddress(FluentValidation.Validators.EmailValidationMode.AspNetCoreCompatible).WithMessage("{PropertyName} not a valid email adress");
 
-            RuleFor(i => i.Password).NotNull().MinimumLength(6).WithMessage("{PropertyName} should at least be {MinLenght} characters");
+            RuleFor(i => i.Password).NotNull().MinimumLength(6).WithMessage(" {PropertyName} should at least be {MinLenght} characters");
         }
     }
 }

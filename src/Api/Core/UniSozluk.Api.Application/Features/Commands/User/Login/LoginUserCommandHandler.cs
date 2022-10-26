@@ -16,7 +16,7 @@ using UniSozluk.Common.Infrastructure.Exceptions;
 using UniSozluk.Common.Models.Queries;
 using UniSozluk.Common.Models.RequestModels;
 
-namespace UniSozluk.Api.Application.Features.Commands.User
+namespace UniSozluk.Api.Application.Features.Commands.User.Login
 {
     public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserViewModel>
     {
@@ -38,16 +38,16 @@ namespace UniSozluk.Api.Application.Features.Commands.User
             if (dbUser == null)
                 throw new DatabaseValidationException("User not found");
 
-            var pass=PasswordEncryptor.Encryt(request.Password);
+            var pass = PasswordEncryptor.Encryt(request.Password);
             if (dbUser.Password != pass)
                 throw new DatabaseValidationException("Password is wrong");
 
-            if(!dbUser.EmailConfirmed)
+            if (!dbUser.EmailConfirmed)
                 throw new DatabaseValidationException("Email adress is not confirmed yet");
 
             var result = mapper.Map<LoginUserViewModel>(dbUser);
 
-            var claims = new Claim[] { 
+            var claims = new Claim[] {
                 new Claim(ClaimTypes.NameIdentifier,dbUser.Id.ToString()),
                 new Claim(ClaimTypes.Email,dbUser.EmailAdress.ToString()),
                 new Claim(ClaimTypes.GivenName,dbUser.FirstName.ToString()),
