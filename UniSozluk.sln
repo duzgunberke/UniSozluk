@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.Projections.UserS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniSozluk.WebApp", "src\Clients\BlazorWeb\UniSozluk.WebApp\UniSozluk.WebApp.csproj", "{E569F72A-6FAB-4C66-920F-B2654C5FA338}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "unisozluk.react", "src\Clients\UniSozluk.React\unisozluk.react.esproj", "{C63F2B56-94A7-472E-B3F2-DE44E70F8C95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,12 @@ Global
 		{E569F72A-6FAB-4C66-920F-B2654C5FA338}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E569F72A-6FAB-4C66-920F-B2654C5FA338}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E569F72A-6FAB-4C66-920F-B2654C5FA338}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C63F2B56-94A7-472E-B3F2-DE44E70F8C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C63F2B56-94A7-472E-B3F2-DE44E70F8C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C63F2B56-94A7-472E-B3F2-DE44E70F8C95}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C63F2B56-94A7-472E-B3F2-DE44E70F8C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C63F2B56-94A7-472E-B3F2-DE44E70F8C95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C63F2B56-94A7-472E-B3F2-DE44E70F8C95}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +111,7 @@ Global
 		{5B9A2235-018A-43F8-90EB-7BAE64774B08} = {E5955155-7495-4E99-BE80-8E5232D31BCC}
 		{89AC7BE1-9E61-4FAE-9596-25C70C2802B1} = {E5955155-7495-4E99-BE80-8E5232D31BCC}
 		{E569F72A-6FAB-4C66-920F-B2654C5FA338} = {8B42B9E3-BFF1-4033-9D00-F4F04D9D47B1}
+		{C63F2B56-94A7-472E-B3F2-DE44E70F8C95} = {8B42B9E3-BFF1-4033-9D00-F4F04D9D47B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47850F8E-A1DF-4B47-9D1E-69DD9D0BD093}

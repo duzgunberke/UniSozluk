@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,22 @@ namespace UniSozluk.Common.Infrastructure
                                        string exchangeType,
                                        string queueName,
                                        object obj)
+        {
+            var consumer = CreateBasicConsumer();
+        }
+
+        public static EventingBasicConsumer CreateBasicConsumer()
+        {
+            var factory=new ConnectionFactory() { HostName=SozlukConstants.RabbitMQHost};
+            var connection =factory.CreateConnection();
+            var channel = connection.CreateModel();
+
+            return new EventingBasicConsumer(channel);
+        }
+
+        public static EventingBasicConsumer EnsureExchange(this EventingBasicConsumer consumer,
+                                                           string exchangeName,
+                                                           string exchangeType = SozlukConstants.DefaultExchangeType)
         {
 
         }
