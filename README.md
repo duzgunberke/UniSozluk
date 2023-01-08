@@ -57,7 +57,7 @@
 ### **<div align="center">Uygulamada gezerken güzel gider :)</div>**  
   
 
-<div align="center"><img src="https://spotify-github-profile.vercel.app/api/view?uid=duzgunberke&cover_image=true&theme=default&bar_color_cover=false&bar_color=00ff33" /></div>
+
 <br />
 
 ----
