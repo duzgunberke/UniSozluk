@@ -15,7 +15,7 @@ namespace UniSozluk.Common.Infrastructure
                                        string queueName,
                                        object obj)
         {
-            var consumer = CreateBasicConsumer();
+            var consumer = CreateBasicConsumer();a
         }
 
         public static EventingBasicConsumer CreateBasicConsumer()
