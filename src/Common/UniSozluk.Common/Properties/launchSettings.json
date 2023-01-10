@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "UniSozluk.Common": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:53237;http://localhost:53243"
+    }
+  }
+}
